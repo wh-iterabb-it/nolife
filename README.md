@@ -1,7 +1,7 @@
 nolife
 =========
 
-[![Issues](https://img.shields.io/github/issues/wh-iterabb-it/nolife/.svg)](https://github.com/wh-iterabb-it/nolife/issues)
+[![Issues](https://img.shields.io/github/issues/wh-iterabb-it/nolife)](https://github.com/wh-iterabb-it/nolife/issues)
 
 ## Description
 
