@@ -10,10 +10,12 @@
 #include <unistd.h> // in this house we are POSIX only
 #include <wchar.h>
 
+// Constants
 #define ROWS 25
 #define COLS 25
 #define LIVE 1
 #define DEAD 0
+#define BUNNY L"🐇"
 
 void clear_terminal(void);
 void display_board(int game_board[ROWS][COLS]);
@@ -26,7 +28,7 @@ int main(void) {
     setlocale(LC_ALL, ""); /* TODO: Error checking, this isn't guaranteed to
                             work on all systems. */
 
-    int game_board[ROWS][COLS] = {0,0};
+    int game_board[ROWS][COLS] = { {0,0} };
     bool playing = true;
 
     /* glider */
@@ -93,11 +95,11 @@ int neighborhood(int game_board[ROWS][COLS], int row, int col) {
 
     if (row != 0)
         neighbors += game_board[row-1][col];   // up
-    if (row != ROWS) 
+    if (row != ROWS)
         neighbors += game_board[row+1][col];   // down
-    if (col != 0) 
+    if (col != 0)
         neighbors += game_board[row][col-1];   // left
-    if (col != COLS) 
+    if (col != COLS)
         neighbors += game_board[row][col+1];   // right
     if (row != 0 && col != 0)
         neighbors += game_board[row-1][col-1]; // up-left
@@ -114,22 +116,21 @@ int neighborhood(int game_board[ROWS][COLS], int row, int col) {
 void display_board(int game_board[ROWS][COLS]) {
     /*
         print the board using pointer arithmetic instead of nested loops. At
-        some point on certain compilers this might've have been faster, but 
+        some point on certain compilers this might've have been faster, but
         there's probably no good reason to do this today.
     */
 
-    wchar_t *bunny = L"🐇";
     int *p, i = 0;
     for (p = &game_board[0][0]; p <= &game_board[ROWS - 1][COLS - 1]; ++p, ++i) {
         if (*p == LIVE) {
-            wprintf(L"%ls", bunny);
+            wprintf(L"%ls", BUNNY);
             fflush(stdout);
         } else {
             printf("- ");
             fflush(stdout);
         }
 
-        /* figure out where to print newline, because you can't easily use mod 
+        /* figure out where to print newline, because you can't easily use mod
         for pointer arithmetic :) */
         if ((i + 1) % COLS == 0)
             putchar('\n');
